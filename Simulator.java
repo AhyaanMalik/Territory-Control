@@ -99,7 +99,7 @@ public class Simulator extends JPanel implements ActionListener {
      * @param x x coordinate of cell
      * @param y y coordinate of cell
      * @return true if the cell is claimed by a player, false if it is unclaimed
-      *
+     *
      */
     public boolean isClaimed(int x, int y) {
         return cells[x][y] != -1;
@@ -139,5 +139,24 @@ public class Simulator extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
 
+        if (source == timer) {
+            for (ColorPlayer player : players)
+                player.next(this);
+            repaint();
+        } else if (source == startButton) {
+            if (!timer.isRunning()) {
+                timer.start();
+            }
+        } else if (source == stopButton) {
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+        } else if (source == backButton) {
+            if (timer.isRunning()) {
+                timer.stop();
+            }
+            cardLayout.show(cards, "Menu");
+        }
     }
+
 }
